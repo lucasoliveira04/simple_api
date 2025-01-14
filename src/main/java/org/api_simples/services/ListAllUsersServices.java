@@ -21,6 +21,7 @@ public class ListAllUsersServices {
     public ResponseEntity<List<StudentDto>> listAllUsers(){
         List<Student> students = studentRepository.findAll();
         List<StudentDto> studentDtos = students.stream()
+                .sorted((s1, s2) -> s1.getId().compareTo(s2.getId()))
                 .map(student -> new StudentDto(
                         student.getId(),
                         student.getName(),
@@ -28,6 +29,7 @@ public class ListAllUsersServices {
                         student.getPhone()
                 ))
                 .collect(Collectors.toList());
+
         return ResponseEntity.ok(studentDtos);
     }
 }
